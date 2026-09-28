@@ -1,26 +1,265 @@
-@import "tailwindcss";
+/* ขาวดำ · ใช้กับ element โดยตรง ไม่ต้องแก้ className ในคอมโพเนนต์ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+  --ink: #0a0a0a;
+  --paper: #ffffff;
+  --gray-1: #f4f4f4;
+  --gray-2: #e2e2e2;
+  --gray-3: #a3a3a3;
+  --gray-4: #5c5c5c;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--paper);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: system-ui, -apple-system, "Segoe UI", "Noto Sans Thai",
+    "Sarabun", Tahoma, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 20px 96px;
+}
+
+h1 {
+  margin: 0 0 28px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid var(--ink);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* ---------- ปุ่ม ---------- */
+button {
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, opacity 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button[type="button"] {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+button[type="button"]:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  border-color: var(--gray-2);
+  background: var(--gray-1);
+  color: var(--gray-3);
+  cursor: not-allowed;
+}
+
+/* ---------- ฟอร์ม ---------- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 28px 0;
+  padding: 24px;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  background: var(--paper);
+}
+
+form button {
+  align-self: flex-start;
+  margin-top: 16px;
+}
+
+form button + button {
+  margin-left: 8px;
+}
+
+label {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+label:first-child {
+  margin-top: 0;
+}
+
+input,
+select {
+  width: 100%;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1.5px solid var(--gray-3);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+input:hover,
+select:hover {
+  border-color: var(--ink);
+}
+
+input::placeholder {
+  color: var(--gray-3);
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border: 2px solid var(--ink);
+  background: var(--gray-1);
+}
+
+/* ข้อความแจ้งเตือนใต้ช่อง เว้นที่ไว้เสมอเพื่อไม่ให้ฟอร์มขยับ */
+span[role="alert"] {
+  display: block;
+  min-height: 1.4em;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+span[role="alert"]:not(:empty)::before {
+  content: "✕ ";
+}
+
+/* ---------- ส่วนแสดงผลรายการ ---------- */
+section[aria-live] {
+  margin-top: 28px;
+  overflow-x: auto;
+}
+
+section[aria-live] > p {
+  margin: 0;
+  padding: 20px;
+  border: 1.5px dashed var(--gray-3);
+  border-radius: 6px;
+  color: var(--gray-4);
+  text-align: center;
+}
+
+section[aria-live] > p[role="alert"] {
+  border: 1.5px solid var(--ink);
+  border-left-width: 6px;
+  background: var(--gray-1);
+  color: var(--ink);
+  font-weight: 600;
+  text-align: left;
+}
+
+table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+
+thead th {
+  padding: 12px 12px;
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid var(--gray-2);
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: var(--gray-1);
+}
+
+/* คอลัมน์ราคาและจำนวนคงเหลือชิดขวา */
+th:nth-child(2),
+th:nth-child(3),
+td:nth-child(2),
+td:nth-child(3) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+th:last-child,
+td:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+td img {
+  display: block;
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  border: 1px solid var(--gray-2);
+  border-radius: 4px;
+  background: var(--paper);
+  filter: grayscale(1);
+  transition: filter 0.2s;
+}
+
+tbody tr:hover td img {
+  filter: grayscale(0);
+}
+
+td button {
+  margin: 0 0 0 6px;
+  padding: 5px 12px;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 28px 14px 64px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  form {
+    padding: 18px;
+  }
 }
